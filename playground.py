@@ -1,17 +1,22 @@
 import cv2
 import numpy as np
-import os
+from playsound import playsound
 
 
-video_path = "/home/alex/Downloads/video2.mp4"
+
+
+video_path = "/home/alex/Downloads/video.mov"
 
 width, height = 1920, 1080
 cap = cv2.VideoCapture(video_path)
 
+# start audio
+playsound("/home/alex/Downloads/video.wav")
+
 while cap.isOpened():
     ret, frame = cap.read()
 
-    if isinstance(frame, type(None)) or cv2.waitKey(1) & 0xFF == ord('q'):
+    if isinstance(frame, type(None)) or cv2.waitKey(40) & 0xFF == ord('q'):
         break
 
     image = np.zeros((height, width, 3), dtype=np.uint8)
