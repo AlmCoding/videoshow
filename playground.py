@@ -3,7 +3,20 @@ import numpy as np
 from playsound import playsound
 
 
+import vlc
+Instance = vlc.Instance()
+player = Instance.media_player_new()
+# player.set_fullscreen(True)
 
+Media = Instance.media_new_path('/home/alex/Downloads/video.mov')
+Media.get_mrl()
+player.set_media(Media)
+player.play()
+
+Media = Instance.media_new_path('/home/alex/Downloads/video2.mp4')
+Media.get_mrl()
+player.set_media(Media)
+player.play()
 
 video_path = "/home/alex/Downloads/video.mov"
 
