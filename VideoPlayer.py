@@ -1,8 +1,6 @@
-import cv2
-import numpy as np
-from playsound import playsound
 import os
 import vlc
+import time
 
 
 video_mapping = {
@@ -23,10 +21,12 @@ video_mapping = {
 
 
 class VideoPlayer:
-    def __init__(self, fullscreen=True):
+    def __init__(self, fullscreen=True, wait=True):
+        self._wait = wait
         self._instance = vlc.Instance()
         self._player = self._instance.media_player_new()
         self._player.set_fullscreen(fullscreen)
+        # print(dir(self._player))
 
     def play(self, file_path):
         if os.path.exists(file_path):
@@ -34,18 +34,14 @@ class VideoPlayer:
             media.get_mrl()
             self._player.set_media(media)
             self._player.play()
+            if self._wait:
+                time.sleep(1.5)
+                duration = self._player.get_length() / 1000
+                time.sleep(duration)
         else:
             raise Exception("File doesn't exist: '{}'".format(file_path))
 
 
-"""
-Media = Instance.media_new_path('/home/alex/Downloads/video.mov')
-Media.get_mrl()
-player.set_media(Media)
-player.play()
-
-Media = Instance.media_new_path('/home/alex/Downloads/video2.mp4')
-Media.get_mrl()
-player.set_media(Media)
-player.play()
-"""
+if __name__ == "__main__":
+    video = '/home/alex/Downloads/video.mov'
+    VideoPlayer().play(video)
